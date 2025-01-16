@@ -1,6 +1,11 @@
 import React from 'react';
 
 const ArraySizeControl = ({ setArraySize }) => {
+  const handleSizeChange = (e) => {
+    const newSize = Math.max(5, Math.min(50, Number(e.target.value))); // Ensure value is between 5 and 50
+    setArraySize(newSize);
+  };
+
   return (
     <div className="array-size-control">
       <label>Array Size:</label>
@@ -9,11 +14,10 @@ const ArraySizeControl = ({ setArraySize }) => {
         min="5"
         max="50"
         defaultValue="20"
-        onChange={(e) => setArraySize(Number(e.target.value))}
+        onChange={handleSizeChange}
       />
     </div>
   );
 };
 
 export default ArraySizeControl;
-
