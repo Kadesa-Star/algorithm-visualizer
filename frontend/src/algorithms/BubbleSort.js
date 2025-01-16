@@ -15,4 +15,4 @@ export const bubbleSort = (arr) => {
   }
 
   return steps;
-};
+}
