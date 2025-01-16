@@ -1,98 +1,123 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import './Visualizer.css';
+import React, { useState, useEffect } from 'react';
 import { bubbleSort } from '../../algorithms/BubbleSort';
 import { selectionSort } from '../../algorithms/SelectionSort';
 import { mergeSort } from '../../algorithms/MergeSort';
 import { quickSort } from '../../algorithms/QuickSort';
+import { insertionSort } from '../../algorithms/InsertionSort';
+import { heapSort } from '../../algorithms/HeapSort';
+import { sortingComplexities } from '../../constants/sortingComplexities';
 
-const Visualizer = ({ algorithm, arraySize, speed }) => {
+const Visualizer = ({ algorithm, arraySize, speed, complexities }) => {
   const [array, setArray] = useState([]);
-  const [sorting, setSorting] = useState(false);
+  const [steps, setSteps] = useState([]);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isSorting, setIsSorting] = useState(false);
 
-  const generateArray = useCallback(() => {
-    const newArray = Array.from({ length: arraySize }, () => Math.floor(Math.random() * 500) + 5);
-    setArray(newArray);
-    document.documentElement.style.setProperty('--array-size', arraySize); // Update CSS variable
+  useEffect(() => {
+    resetArray();
   }, [arraySize]);
 
   useEffect(() => {
-    generateArray();
-  }, [generateArray]);
-
-  useEffect(() => {
-    generateArray();
-    setSorting(false);
-  }, [algorithm, generateArray]);
-
-  const visualizeSorting = () => {
-    if (!algorithm) {
-      alert('Please select a sorting algorithm!');
-      return;
+    if (algorithm) {
+      resetArray();
     }
-    if (sorting) {
-      alert('Sorting is already in progress!');
-      return;
+  }, [algorithm]);
+
+  const resetArray = () => {
+    const newArray = [];
+    for (let i = 0; i < arraySize; i++) {
+      newArray.push(randomIntFromInterval(5, 500));
     }
+    setArray(newArray);
+    setCurrentStep(0);
+    setIsSorting(false);  // Ensure sorting is stopped when resetting
+  };
 
-    setSorting(true);
+  const visualizeAlgorithm = () => {
+    if (isSorting) return; // Prevent multiple sorts at once
 
-    let sortingSteps = [];
+    setIsSorting(true);
+    let sortingSteps;
     switch (algorithm) {
       case 'Bubble Sort':
-        sortingSteps = bubbleSort([...array]);
+        sortingSteps = bubbleSort(array);
         break;
       case 'Selection Sort':
-        sortingSteps = selectionSort([...array]);
+        sortingSteps = selectionSort(array);
         break;
       case 'Merge Sort':
-        sortingSteps = mergeSort([...array]);
+        sortingSteps = mergeSort(array);
         break;
       case 'Quick Sort':
-        sortingSteps = quickSort([...array]);
+        sortingSteps = quickSort(array);
+        break;
+      case 'Insertion Sort':
+        sortingSteps = insertionSort(array);
+        break;
+      case 'Heap Sort':
+        sortingSteps = heapSort(array);
         break;
       default:
-        console.error('Invalid algorithm selected.');
-        setSorting(false);
         return;
     }
 
+    setSteps(sortingSteps);
+    animateSortingSteps(sortingSteps);
+  };
+
+  const animateSortingSteps = (sortingSteps) => {
     let stepIndex = 0;
-
-    const executeStep = () => {
-      if (stepIndex >= sortingSteps.length) {
-        setSorting(false);
-        return;
+    const interval = setInterval(() => {
+      if (stepIndex < sortingSteps.length) {
+        setArray([...sortingSteps[stepIndex]]);
+        setCurrentStep(stepIndex);
+        stepIndex++;
+      } else {
+        clearInterval(interval);
+        setIsSorting(false);
       }
+    }, speed);
+  };
 
-      setArray(sortingSteps[stepIndex]);
-      stepIndex++;
+  const randomIntFromInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
-      setTimeout(executeStep, speed);
-    };
+  const getTimeComplexity = (algorithm) => {
+    if (!algorithm) return 'N/A';
+    const complexities = sortingComplexities[algorithm];
+    return `BC: ${complexities.best}, AC: ${complexities.average}, WC: ${complexities.worst}`;
+  };
 
-    executeStep();
+  const getSpaceComplexity = (algorithm) => {
+    if (!algorithm) return 'N/A';
+    const complexities = sortingComplexities[algorithm];
+    return complexities.space || 'O(n)'; // Default to O(n) if space complexity not available
   };
 
   return (
     <div className="visualizer">
-      <div className="controls">
-        <button onClick={visualizeSorting} disabled={sorting}>
-          {sorting ? 'Sorting...' : 'Visualize Sorting'}
-        </button>
-        <button onClick={generateArray} disabled={sorting}>
-          Reset Array
-        </button>
-      </div>
       <div className="array-container">
-        {array.map((value, idx) => (
+        {array.map((value, index) => (
           <div
-            key={idx}
             className="array-bar"
-            style={{
-              height: `${(value / 500) * 100}%`, // Scale height relative to max value
-            }}
+            style={{ height: `${value}px`, width: `${100 / arraySize}%` }}
+            key={index}
           ></div>
         ))}
+      </div>
+      <div className="controls">
+        <button onClick={visualizeAlgorithm} disabled={isSorting}>
+          {isSorting ? 'Sorting...' : 'Visualize Algorithm'}
+        </button>
+        <button onClick={resetArray} disabled={isSorting}>
+          Reset
+        </button>
+      </div>
+      <div className="algorithm-complexities">
+        <h3>Algorithm Complexities</h3>
+        <p>Time Complexity: {getTimeComplexity(algorithm)}</p>
+        <p>Space Complexity: {getSpaceComplexity(algorithm)}</p>
       </div>
     </div>
   );

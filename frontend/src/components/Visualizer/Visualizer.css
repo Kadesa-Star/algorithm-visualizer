@@ -3,21 +3,21 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
   padding: 10px;
   box-sizing: border-box;
 }
 
 .array-container {
   display: flex;
-  align-items: flex-end; /* Align bars to the bottom */
+  align-items: flex-end;
   justify-content: center;
-  gap: 5px; /* Add spacing between bars */
-  height: 60%; /* Reduce height for more control space */
-  width: 80%; /* Restrict maximum width of the container */
-  max-width: 1200px; /* Ensure it doesn't stretch too wide */
-  overflow: hidden; /* Hide overflow to avoid scrollbars */
-  background-color: #f0f8ff; /* Light blue background for visibility */
+  gap: 5px;
+  height: 60%;
+  width: 80%;
+  max-width: 1200px;
+  overflow: hidden;
+  background-color: #f0f8ff;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -25,7 +25,8 @@
 
 .array-bar {
   background-color: #69b3f5;
-  width: calc(60% / var(--array-size)); /* Reduce bar width */
+  width: calc(50% / var(--array-size));  /* Make the bars thinner (50% of available width per bar) */
+  height: calc(80% * var(--array-value) / 500);  /* Adjust height to be a percentage of max height (500 as the max value) */
   transition: height 0.2s, background-color 0.2s;
 }
 
@@ -37,3 +38,7 @@
   margin-bottom: 10px;
 }
 
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
