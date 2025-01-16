@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Visualizer from './components/Visualizer/Visualizer';
 import AlgorithmSelector from './components/UIControls/AlgorithmSelector';
@@ -10,6 +10,7 @@ const App = () => {
   const [arraySize, setArraySize] = useState(20);
   const [speed, setSpeed] = useState(500); // Initial speed in ms
   const [key, setKey] = useState(0); // Key to force re-render
+  const [complexities, setComplexities] = useState({});
 
   // Handle Algorithm Change
   const handleAlgorithmChange = (newAlgorithm) => {
@@ -31,11 +32,11 @@ const App = () => {
     <div className="app">
       <h1>Sorting Algorithm Visualizer</h1>
       <div className="controls">
-        <AlgorithmSelector setAlgorithm={handleAlgorithmChange} />
+        <AlgorithmSelector setAlgorithm={handleAlgorithmChange} setComplexities={setComplexities} />
         <ArraySizeControl setArraySize={handleArraySizeChange} />
         <SpeedControl setSpeed={handleSpeedChange} />
       </div>
-      <Visualizer key={key} algorithm={algorithm} arraySize={arraySize} speed={speed} />
+      <Visualizer key={key} algorithm={algorithm} arraySize={arraySize} speed={speed} complexities={complexities} />
     </div>
   );
 };
