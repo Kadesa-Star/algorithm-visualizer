@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Visualizer from './components/Visualizer/Visualizer';
 import AlgorithmSelector from './components/UIControls/AlgorithmSelector';

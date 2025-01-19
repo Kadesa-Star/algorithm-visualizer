@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { bubbleSort } from '../../algorithms/BubbleSort';
 import { selectionSort } from '../../algorithms/SelectionSort';
 import { mergeSort } from '../../algorithms/MergeSort';
@@ -9,29 +9,26 @@ import { sortingComplexities } from '../../constants/sortingComplexities';
 
 const Visualizer = ({ algorithm, arraySize, speed, complexities }) => {
   const [array, setArray] = useState([]);
-  const [steps, setSteps] = useState([]);
-  const [currentStep, setCurrentStep] = useState(0);
   const [isSorting, setIsSorting] = useState(false);
 
-  useEffect(() => {
-    resetArray();
-  }, [arraySize]);
-
-  useEffect(() => {
-    if (algorithm) {
-      resetArray();
-    }
-  }, [algorithm]);
-
-  const resetArray = () => {
+  const resetArray = useCallback(() => {
     const newArray = [];
     for (let i = 0; i < arraySize; i++) {
       newArray.push(randomIntFromInterval(5, 500));
     }
     setArray(newArray);
-    setCurrentStep(0);
     setIsSorting(false);  // Ensure sorting is stopped when resetting
-  };
+  }, [arraySize]);
+
+  useEffect(() => {
+    resetArray();
+  }, [arraySize, resetArray]);
+
+  useEffect(() => {
+    if (algorithm) {
+      resetArray();
+    }
+  }, [algorithm, resetArray]);
 
   const visualizeAlgorithm = () => {
     if (isSorting) return; // Prevent multiple sorts at once
@@ -61,7 +58,6 @@ const Visualizer = ({ algorithm, arraySize, speed, complexities }) => {
         return;
     }
 
-    setSteps(sortingSteps);
     animateSortingSteps(sortingSteps);
   };
 
@@ -70,7 +66,6 @@ const Visualizer = ({ algorithm, arraySize, speed, complexities }) => {
     const interval = setInterval(() => {
       if (stepIndex < sortingSteps.length) {
         setArray([...sortingSteps[stepIndex]]);
-        setCurrentStep(stepIndex);
         stepIndex++;
       } else {
         clearInterval(interval);
