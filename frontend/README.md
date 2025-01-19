@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# **Algorithm Visualizer**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## **Problem Statement**
+Understanding algorithms can be challenging, especially for visual learners. Traditional methods, such as reading code or static diagrams, often fail to convey the dynamic nature of these processes. This project solves that problem by providing an intuitive, visual tool for learning algorithms in an engaging and interactive way.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## **Solution**
+The Algorithm Visualizer provides an interactive platform where users can:
 
-### `npm start`
+- Select and visualize different sorting algorithms (e.g., Bubble Sort, QuickSort).
+- See animations of data being processed step-by-step.
+- Compare algorithm performance visually, with metrics like time complexity highlighted.
+- (Optional) View pseudocode alongside visualizations for deeper understanding.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## **Technologies**
+### **Frontend**:
+- **React**: For building dynamic and interactive components.
+- **CSS**: For styling and animations to enhance the visual appeal.
+- **HTML**: For structuring the web pages and implementing a responsive layout.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## **Project Architecture Overview**
+The Algorithm Visualizer follows a modular architecture to ensure scalability and maintainability:
 
-### `npm run build`
+1. **Frontend**:
+   - Built using React, structured into reusable components (e.g., SortingVisualizer, ControlPanel).
+   - CSS handles animations for dynamic visualizations.
+   - React's state management facilitates smooth transitions and updates during the animations.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Deployment**:
+   - The app is containerized using Docker for consistency across environments.
+   - Static assets generated with `npm run build` are hosted via GitHub Pages for live access.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## **Setup Instructions**
+**Navigating the Interface**:
 
-### `npm run eject`
+   - Select an algorithm from the menu (e.g., Bubble Sort, QuickSort).
+   - Customize the input size and speed of the visualization using the control panel.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Running Visualizations**:
+   - Press the "Start" button to begin the visualization.
+   - Pause or reset as needed to study specific parts of the algorithm in detail.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+** Comparing Algorithms(To Be Implemented)**:
+   - Run multiple algorithms to observe their performance side-by-side.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+** Learning with Pseudocode (Optional)**:
+   - View the pseudocode alongside the visualization for a deeper understanding.
